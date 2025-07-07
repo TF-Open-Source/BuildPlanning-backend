@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -38,6 +39,12 @@ public class Task {
 
     @Column(name = "creada_por_id")
     private Long createdById;
+
+    @Column(name = "asignado_por_id")
+    private Long assignedById; // Nuevo campo
+
+    @Column(name = "fecha_asignacion")
+    private LocalDateTime assignedDate; // Nuevo campo
 
     @Column(name = "tiene_problema")
     private Boolean hasIssue;

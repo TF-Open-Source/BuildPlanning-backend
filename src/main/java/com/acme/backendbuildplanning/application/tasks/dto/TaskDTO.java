@@ -21,6 +21,7 @@ public class TaskDTO {
     @Data
     public static class AssignedToDTO {
         private Long id;
-        private String name;
+        private String email;
     }
 }
+
