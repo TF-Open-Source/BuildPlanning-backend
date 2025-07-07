@@ -22,19 +22,20 @@ public class UsuarioController {
     @Autowired
     private UserService userService;
 
-    // Registro de un nuevo usuario (voluntario u organización)
     @PostMapping("/registro")
     public ResponseEntity<Map<String, Object>> registerUser(@Valid @RequestBody RegisterRequest request) {
-        // Crear y guardar el usuario primero
         UserDTO userDTO = new UserDTO();
         userDTO.setEmail(request.getEmail());
         userDTO.setPassword(request.getPassword());
         userDTO.setUserType(request.getUserType());
+        userDTO.setFirstName(request.getFirstName());
+        userDTO.setLastName(request.getLastName());
+        userDTO.setDni(request.getDni());
+        userDTO.setPhone(request.getPhone());
+        userDTO.setGender(request.getGender());
 
-        // Guardar el usuario en la base de datos
         UserDTO savedUser = userService.registerUser(userDTO);
 
-        // Verificar si el usuario fue guardado correctamente
         if (savedUser == null || savedUser.getId() == null) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Map.of("mensaje", "Error al registrar el usuario"));
@@ -44,7 +45,6 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    // Iniciar sesión con correo y contraseña
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest request) {
         try {
