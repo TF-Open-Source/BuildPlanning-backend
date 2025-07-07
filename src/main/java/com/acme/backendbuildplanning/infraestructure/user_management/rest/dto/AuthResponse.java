@@ -8,9 +8,8 @@ import lombok.Setter;
 public class AuthResponse {
     private String token;
     private String userType;
-    private Long userId;  // Incluir el ID del usuario
+    private Long userId;
 
-    // Getters y setters
     public String getToken() {
         return token;
     }

@@ -33,20 +33,25 @@ public class UserService {
             } catch (IllegalArgumentException e) {
                 throw new IllegalArgumentException("Tipo de usuario inválido.");
             }
+            newUser.setFirstName(userDTO.getFirstName());
+            newUser.setLastName(userDTO.getLastName());
+            newUser.setDni(userDTO.getDni());
+            newUser.setPhone(userDTO.getPhone());
+            newUser.setGender(userDTO.getGender());
+
             User savedUser = userRepository.save(newUser);
             return mapToDTO(savedUser);
         } catch (IllegalArgumentException e){
-
             throw new IllegalArgumentException(e.getMessage());
         }
     }
+
     public UserDTO getUserByEmail(String email) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new NotFoundException("User no encontrado"));
         return mapToDTO(user);
     }
 
-    // Iniciar sesión con correo y contraseña
     public String login(String email, String password) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("User no encontrado con ese correo"));
@@ -64,17 +69,21 @@ public class UserService {
                 .compact();
 
 
-        // Retornar un token ficticio o real generado
         return jwt;
     }
 
 
-    // Conversión de entidad a DTO
     private UserDTO mapToDTO(User user) {
         UserDTO dto = new UserDTO();
         dto.setId(user.getId());
         dto.setEmail(user.getEmail());
         dto.setUserType(user.getUserType().name());
+        dto.setFirstName(user.getFirstName());
+        dto.setLastName(user.getLastName());
+        dto.setDni(user.getDni());
+        dto.setPhone(user.getPhone());
+        dto.setGender(user.getGender());
         return dto;
     }
+
 }
